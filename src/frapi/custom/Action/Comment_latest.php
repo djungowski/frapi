@@ -11,7 +11,18 @@
  */
 class Action_Comment_latest extends Frapi_Action implements Frapi_Action_Interface
 {
+    /**
+     * Default limit for latest comments
+	 *
+     * @var Integer
+     */
     const LIMIT = 3;
+    
+    /**
+     * Default startpoint for latest comments
+     * 
+     * @var Integer
+     */
     const OFFSET = 0;
 
     /**
@@ -62,18 +73,28 @@ class Action_Comment_latest extends Frapi_Action implements Frapi_Action_Interfa
      */
     public function executeGet()
     {
-        $db = Frapi_Database::getInstance();
         $limit = $this->getParam('limit', FRAPI_ACTION::TYPE_INTEGER, self::LIMIT);
         $offset = $this->getParam('offset', FRAPI_ACTION::TYPE_INTEGER, self::OFFSET);
+        
+        $movietitle = $this->getConfig('movietitles');
+        
         $sql = '
-        	SELECT * FROM comment2
-        	ORDER BY timestamp DESC
-        	LIMIT %d, %d
+        	SELECT		c.*,
+        				u.login 		AS user,
+        				t.title			AS movietitle,
+        				t.year			AS movieyear
+        	FROM		comment2 		AS c
+        	INNER JOIN	user			AS u
+        	ON 			(u.ID = c.userID)
+        	INNER JOIN	movie		AS m
+            ON			(m.ID = c.refID)
+            INNER JOIN	title_m		AS t
+            ON			(t.ID = m.%s)
+        	ORDER BY	c.timestamp DESC
+        	LIMIT 		%d, %d
         ';
-        $sql = sprintf($sql, $offset, $limit);
-        $statement = $db->query($sql);
-        $this->data = $statement->fetchAll(PDO::FETCH_ASSOC);
-        $this->data = $this->encodeUtf8Recursive($this->data);
+        $sql = sprintf($sql, $movietitle, $offset, $limit);
+        $this->data = $this->readFromDatabaseMulti($sql);
         return $this->toArray();
     }
 
