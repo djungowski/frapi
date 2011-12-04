@@ -55,5 +55,19 @@
     </parameter>
    </parameters>
   </action>
+  <action>
+   <name>Ontv</name>
+   <enabled>1</enabled>
+   <public>0</public>
+   <description>List of Movies on German TV</description>
+   <route>/ontv/list</route>
+   <hash>10779a03753b52fc3c405f8e7017a64bf9aad1c3</hash>
+   <parameters>
+    <parameter>
+     <name>session_id</name>
+     <required>0</required>
+    </parameter>
+   </parameters>
+  </action>
  </actions>
 </frapi-config>
