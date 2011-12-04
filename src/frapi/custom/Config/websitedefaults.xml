@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<frapi-config>
+  <websitedefaults>
+    <websitedefault>
+      <key>movietitles</key>
+      <value>en</value>
+    </websitedefault>
+  </websitedefaults>
+</frapi-config>
