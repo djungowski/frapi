@@ -60,6 +60,22 @@ class Action_Rating_latest extends Frapi_Action implements Frapi_Action_Interfac
      */
     public function executeGet()
     {
+        $movietitle = $this->getConfig('movietitles');
+        
+        $sql = '
+        SELECT		r.*,
+        			t.title 	AS movietitle,
+        			t.year		AS movieyear
+        FROM		score_m		AS r
+        INNER JOIN	movie		AS m
+        ON			(m.ID = r.movieID)
+        INNER JOIN	title_m		AS t
+        ON			(t.ID = m.%s)
+        ORDER BY	r.timestamp DESC
+        LIMIT		10
+        ';
+        $sql = sprintf($sql, $movietitle);
+        $this->data = $this->readFromDatabaseMulti($sql);
         return $this->toArray();
     }
 

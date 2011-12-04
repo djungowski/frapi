@@ -1,4 +1,5 @@
 <?php
+require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Config.php';
 
 /**
  * Action class
@@ -89,6 +90,12 @@ class Frapi_Action
      * @var string The name of the custom template to load from custom/Output/{type}/custom/
      */
     protected $customTemplate = false;
+    
+    /**
+     * 
+     * @var Custom_Model_Defaults
+     */
+    protected $_websiteConfig;
 
     /**
      * Get an instance of the desired type of Action
@@ -357,5 +364,64 @@ class Frapi_Action
     protected function hasParam($key)
     {
         return isset($this->params[$key]);
+    }
+    
+    /**
+     * Sent a Query to the default database connection
+     * and return it UTF8 encoded (multiple values returned)
+     * 
+     * @param String $query
+     */
+    protected function readFromDatabaseMulti($query)
+    {
+        $db = Frapi_Database::getInstance();
+        $statement = $db->query($query);
+        $data = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $data = $this->encodeUtf8Recursive($data);
+        return $data;
+    }
+    
+/**
+     * Sent a Query to the default database connection
+     * and return it UTF8 encoded (one value returned)
+     * 
+     * @param String $query
+     */
+    protected function readFromDatabaseSingle($query)
+    {
+        $db = Frapi_Database::getInstance();
+        $statement = $db->query($query);
+        $data = $statement->fetch(PDO::FETCH_ASSOC);
+        // If login credentials are wrong or user is not active, use empty array
+        if(!$data) {
+            $data = array();
+        }
+        $data = $this->encodeUtf8Recursive($data);
+        return $data;
+    }
+    
+    /**
+     * Encode a whole array to UTF8
+     * 
+     * @param Array $param
+     */
+    protected function encodeUtf8Recursive($array)
+    {
+        foreach ($array as $key => $value) {
+            if (is_array($value)) {
+                $array[$key] = $this->encodeUtf8Recursive($value);
+            } else {
+                $array[$key] = utf8_encode($value);
+            }
+        }
+        return $array;
+    }
+    
+    protected function getConfig($key)
+    {
+        if (!isset($this->_websiteConfig)) {
+            $this->_websiteConfig = new Custom_Model_Config();
+        }
+        return $this->_websiteConfig->getConfig($key);
     }
 }

@@ -11,11 +11,10 @@
   </configuration>
   <configuration>
    <key>db_password</key>
-   <value>password</value>
   </configuration>
   <configuration>
    <key>db_database</key>
-   <value>example</value>
+   <value>score11</value>
   </configuration>
   <configuration>
    <key>api_url</key>

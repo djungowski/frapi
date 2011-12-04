@@ -15,5 +15,12 @@
    <description>This error is returned whenever a collection or a resource prevents the use of the POST method.</description>
    <hash>d252bf7363a7431dd0cdd4fb5454dcb80901e429</hash>
   </error>
+  <error>
+   <name>NO_GET</name>
+   <message>GET calls are not accepted for this request.</message>
+   <http_code>403</http_code>
+   <description>POST calls are not accepted for this request.</description>
+   <hash>fd21aa045b559e31583274843412367aa9018144</hash>
+  </error>
  </errors>
 </frapi-config>

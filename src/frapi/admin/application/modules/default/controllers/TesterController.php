@@ -114,7 +114,6 @@ class TesterController extends Lupin_Controller_Base
             $url = $request->getUrl();
             $url->setQueryVariables(array() + $params);
         }
-
         try {
             $res = $request->send();
         } catch (Exception $e) {
