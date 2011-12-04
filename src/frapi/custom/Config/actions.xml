@@ -17,6 +17,10 @@
      <name>offet</name>
      <required>0</required>
     </parameter>
+    <parameter>
+     <name>session_id</name>
+     <required>0</required>
+    </parameter>
    </parameters>
   </action>
   <action>
@@ -44,7 +48,12 @@
    <description>Shows the latest ratings</description>
    <route>/rating/latest</route>
    <hash>c6e0f726b7521a617852995a1fb853e597bd7f40</hash>
-   <parameters></parameters>
+   <parameters>
+    <parameter>
+     <name>session_id</name>
+     <required>0</required>
+    </parameter>
+   </parameters>
   </action>
  </actions>
 </frapi-config>

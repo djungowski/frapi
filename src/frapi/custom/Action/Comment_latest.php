@@ -1,4 +1,5 @@
 <?php
+require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Config.php';
 
 /**
  * Action Comment_latest 
@@ -75,8 +76,10 @@ class Action_Comment_latest extends Frapi_Action implements Frapi_Action_Interfa
     {
         $limit = $this->getParam('limit', FRAPI_ACTION::TYPE_INTEGER, self::LIMIT);
         $offset = $this->getParam('offset', FRAPI_ACTION::TYPE_INTEGER, self::OFFSET);
+        $sessionId = $this->getParam('session_id', Frapi_Action::TYPE_STRING, null);
         
-        $movietitle = $this->getConfig('movietitles');
+        $config = new Custom_Model_Config($sessionId);
+        $movietitle = $config->getConfig('titleview');
         
         $sql = '
         	SELECT		c.*,

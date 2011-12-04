@@ -11,7 +11,6 @@
  */
 class Action_User_login extends Frapi_Action implements Frapi_Action_Interface
 {
-
     /**
      * Required parameters
      * 
@@ -103,15 +102,25 @@ class Action_User_login extends Frapi_Action implements Frapi_Action_Interface
         // If the $userInfo array is empty, the login was unsuccessful
         $loginSuccessful = !empty($userInfo);
         $this->data['success'] = $loginSuccessful;
-        if (!$loginSuccessful) {
-            $this->increaseFailedLogins($login);
-        } else {
-            $this->updateLoginData($userInfo['ID']);
-        }
         $this->data = array_merge($this->data, $userInfo);
-        // Hier muss noch irgendwas Session-aehnliches her... Memcache evtl?
-        //$_SESSION  = $this->data;
+        
+        if ($loginSuccessful) {
+            $this->updateLoginData($userInfo['ID']);
+            $this->createSession();
+        } else {
+            $this->increaseFailedLogins($login);
+        }
+
         return $this->toArray();
+    }
+    
+    protected function createSession()
+    {
+        $sessionId = sha1(time() . rand(100000, 999999) . rand(100000, 999999));
+        $this->data['session_id'] = $sessionId;
+        $memcache = new Memcache();
+        $memcache->addServer('localhost');
+        $memcache->set($sessionId, json_encode($this->data));
     }
     
     /**

@@ -2,8 +2,8 @@
 <frapi-config>
   <websitedefaults>
     <websitedefault>
-      <key>movietitles</key>
-      <value>en</value>
+      <key>titleview</key>
+      <value>de</value>
     </websitedefault>
   </websitedefaults>
 </frapi-config>

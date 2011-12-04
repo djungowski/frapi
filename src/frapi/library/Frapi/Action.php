@@ -1,5 +1,4 @@
 <?php
-require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Config.php';
 
 /**
  * Action class
@@ -415,13 +414,5 @@ class Frapi_Action
             }
         }
         return $array;
-    }
-    
-    protected function getConfig($key)
-    {
-        if (!isset($this->_websiteConfig)) {
-            $this->_websiteConfig = new Custom_Model_Config();
-        }
-        return $this->_websiteConfig->getConfig($key);
     }
 }
