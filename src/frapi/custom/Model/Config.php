@@ -2,6 +2,8 @@
 
 class Custom_Model_Config
 {
+    const SESSION_DURATION = 1800;
+    
     protected $_memcache;
     
     protected $_config;
@@ -11,7 +13,12 @@ class Custom_Model_Config
         if (!is_null($sessionId)) {
             $this->_memcache = new Memcache();
             $this->_memcache->addServer('127.0.0.1');
-            $this->_config = json_decode($this->_memcache->get($sessionId), true);
+            $this->_config = $this->_memcache->get($sessionId);
+            // Session verlaengern
+            if ($this->_config !== false) {
+                $success = $this->_memcache->replace($sessionId, $this->_config, null, self::SESSION_DURATION);
+            }
+            $this->_config = json_decode($this->_config, true);
         }
     }
     

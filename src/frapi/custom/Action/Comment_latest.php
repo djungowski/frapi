@@ -1,5 +1,6 @@
 <?php
 require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Config.php';
+require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Database.php';
 
 /**
  * Action Comment_latest 
@@ -97,7 +98,9 @@ class Action_Comment_latest extends Frapi_Action implements Frapi_Action_Interfa
         	LIMIT 		%d, %d
         ';
         $sql = sprintf($sql, $movietitle, $offset, $limit);
-        $this->data = $this->readFromDatabaseMulti($sql);
+        
+        $db = new Custom_Model_Database();
+        $this->data = $db->fetchAll($sql);
         return $this->toArray();
     }
 

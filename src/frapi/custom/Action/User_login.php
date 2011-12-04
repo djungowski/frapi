@@ -1,4 +1,6 @@
 <?php
+require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Config.php';
+require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Database.php';
 
 /**
  * Action User_login 
@@ -81,7 +83,7 @@ class Action_User_login extends Frapi_Action implements Frapi_Action_Interface
         if ($valid instanceof Frapi_Error) {
             return $valid;
         }
-        $db = Frapi_Database::getInstance();
+        $db = new Custom_Model_Database();
         
         $login = $this->getParam('login', Frapi_Action::TYPE_STRING);
         $login = $db->quote($login);
@@ -98,7 +100,7 @@ class Action_User_login extends Frapi_Action implements Frapi_Action_Interface
         ';
         $sql = sprintf($sql, $login, $password);
         
-        $userInfo = $this->readFromDatabaseSingle($sql);
+        $userInfo = $db->fetch($sql);
         // If the $userInfo array is empty, the login was unsuccessful
         $loginSuccessful = !empty($userInfo);
         $this->data['success'] = $loginSuccessful;
@@ -120,7 +122,7 @@ class Action_User_login extends Frapi_Action implements Frapi_Action_Interface
         $this->data['session_id'] = $sessionId;
         $memcache = new Memcache();
         $memcache->addServer('localhost');
-        $memcache->set($sessionId, json_encode($this->data));
+        $memcache->set($sessionId, json_encode($this->data), null, Custom_Model_Config::SESSION_DURATION);
     }
     
     /**
