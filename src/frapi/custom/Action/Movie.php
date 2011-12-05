@@ -67,7 +67,7 @@ class Action_Movie extends Frapi_Action implements Frapi_Action_Interface
             return $valid;
         }
         
-        $movieId = $this->getParam('movie_id');
+        $movieId = $this->getParam('movie_id', Frapi_Action::TYPE_INTEGER, 0);
         $token = $this->getParam('token', Frapi_Action::TYPE_STRING, null);
         $config = new Custom_Model_Config($token);
         $titleview = $config->getConfig('titleview');

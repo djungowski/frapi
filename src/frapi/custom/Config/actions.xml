@@ -95,5 +95,27 @@
     </parameter>
    </parameters>
   </action>
+  <action>
+   <name>Movie_comments</name>
+   <enabled>1</enabled>
+   <public>0</public>
+   <description>Get all the comments for a movie</description>
+   <route>/movie/:movie_id/comments</route>
+   <hash>2bf8fc4792b2f7b8dfe1a4f108d4a0717ecdcebc</hash>
+   <parameters>
+    <parameter>
+     <name>limit</name>
+     <required>0</required>
+    </parameter>
+    <parameter>
+     <name>offset</name>
+     <required>0</required>
+    </parameter>
+    <parameter>
+     <name>movie_id</name>
+     <required>1</required>
+    </parameter>
+   </parameters>
+  </action>
  </actions>
 </frapi-config>
