@@ -18,7 +18,7 @@
      <required>0</required>
     </parameter>
     <parameter>
-     <name>session_id</name>
+     <name>token</name>
      <required>0</required>
     </parameter>
    </parameters>
@@ -50,7 +50,7 @@
    <hash>c6e0f726b7521a617852995a1fb853e597bd7f40</hash>
    <parameters>
     <parameter>
-     <name>session_id</name>
+     <name>token</name>
      <required>0</required>
     </parameter>
    </parameters>
@@ -64,7 +64,15 @@
    <hash>10779a03753b52fc3c405f8e7017a64bf9aad1c3</hash>
    <parameters>
     <parameter>
-     <name>session_id</name>
+     <name>token</name>
+     <required>0</required>
+    </parameter>
+    <parameter>
+     <name>limit</name>
+     <required>0</required>
+    </parameter>
+    <parameter>
+     <name>offset</name>
      <required>0</required>
     </parameter>
    </parameters>
