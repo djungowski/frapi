@@ -77,5 +77,23 @@
     </parameter>
    </parameters>
   </action>
+  <action>
+   <name>Movie</name>
+   <enabled>1</enabled>
+   <public>0</public>
+   <description>Show movie with all its details</description>
+   <route>/movie/:movie_id</route>
+   <hash>5c9879c7028cd361bd4d2df37c171175df60f7eb</hash>
+   <parameters>
+    <parameter>
+     <name>token</name>
+     <required>0</required>
+    </parameter>
+    <parameter>
+     <name>movie_id</name>
+     <required>1</required>
+    </parameter>
+   </parameters>
+  </action>
  </actions>
 </frapi-config>
