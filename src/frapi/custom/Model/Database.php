@@ -39,6 +39,10 @@ class Custom_Model_Database
     public function fetchAll($query)
     {
         $statement = $this->_db->query($query);
+        if ($statement === false) {
+            $errorInfo = $this->_db->errorInfo();
+            throw new Frapi_Error('SQL_ERROR ' . $errorInfo[0], $errorInfo[2], 500);
+        }
         $data = $statement->fetchAll(PDO::FETCH_ASSOC);
         $data = $this->encodeUtf8Recursive($data);
         return $data;

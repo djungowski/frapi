@@ -62,8 +62,8 @@ class Action_Rating_latest extends Frapi_Action implements Frapi_Action_Interfac
      */
     public function executeGet()
     {
-        $sessionId = $this->getParam('session_id', Frapi_Action::TYPE_STRING, null);
-        $config = new Custom_Model_Config($sessionId);
+        $token = $this->getParam('token', Frapi_Action::TYPE_STRING, null);
+        $config = new Custom_Model_Config($token);
         $movietitle = $config->getConfig('titleview');
         
         $sql = '

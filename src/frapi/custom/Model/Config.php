@@ -8,15 +8,15 @@ class Custom_Model_Config
     
     protected $_config;
     
-    public function __construct($sessionId = null)
+    public function __construct($token = null)
     {
-        if (!is_null($sessionId)) {
+        if (!is_null($token) && !empty($token)) {
             $this->_memcache = new Memcache();
             $this->_memcache->addServer('127.0.0.1');
-            $this->_config = $this->_memcache->get($sessionId);
+            $this->_config = $this->_memcache->get($token);
             // Session verlaengern
             if ($this->_config !== false) {
-                $success = $this->_memcache->replace($sessionId, $this->_config, null, self::SESSION_DURATION);
+                $success = $this->_memcache->replace($token, $this->_config, null, self::SESSION_DURATION);
             }
             $this->_config = json_decode($this->_config, true);
         }

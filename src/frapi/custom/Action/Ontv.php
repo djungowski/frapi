@@ -1,4 +1,6 @@
 <?php
+require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Config.php';
+require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Database.php';
 
 /**
  * Action Ontv 
@@ -60,6 +62,35 @@ class Action_Ontv extends Frapi_Action implements Frapi_Action_Interface
      */
     public function executeGet()
     {
+        $token = $this->getParam('token', Frapi_Action::TYPE_STRING, null);
+        
+        $db = new Custom_Model_Database();
+        $config = new Custom_Model_Config($token);
+        $titleview = $config->getConfig('titleview');
+        
+        $query = '
+        SELECT
+        	tv.*,
+        	DATE_FORMAT(tv.date, "%s") AS day,
+        	t.title AS movietitle,
+        	t.year AS movieyear
+    	FROM s11_ontv_de AS tv
+		INNER JOIN	movie AS m
+            ON (m.ID = tv.movieID)
+        INNER JOIN	title_m		AS t
+            ON (t.ID = m.%s)
+        WHERE
+			tv.date >= NOW()
+		LIMIT 10
+        ';
+        $query = sprintf($query, '%Y-%m-%d', $titleview);
+        $movies = $db->fetchAll($query);
+        foreach($movies as $movie) {
+            if (!isset($this->data[$movie['day']])) {
+                $this->data[$movie['day']] = array();
+            }
+            $this->data[$movie['day']][] = $movie;
+        }
         return $this->toArray();
     }
 

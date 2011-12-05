@@ -119,7 +119,7 @@ class Action_User_login extends Frapi_Action implements Frapi_Action_Interface
     protected function createSession()
     {
         $sessionId = sha1(time() . rand(100000, 999999) . rand(100000, 999999));
-        $this->data['session_id'] = $sessionId;
+        $this->data['token'] = $sessionId;
         $memcache = new Memcache();
         $memcache->addServer('localhost');
         $memcache->set($sessionId, json_encode($this->data), null, Custom_Model_Config::SESSION_DURATION);

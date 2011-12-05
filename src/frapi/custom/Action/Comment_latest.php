@@ -77,9 +77,9 @@ class Action_Comment_latest extends Frapi_Action implements Frapi_Action_Interfa
     {
         $limit = $this->getParam('limit', FRAPI_ACTION::TYPE_INTEGER, self::LIMIT);
         $offset = $this->getParam('offset', FRAPI_ACTION::TYPE_INTEGER, self::OFFSET);
-        $sessionId = $this->getParam('session_id', Frapi_Action::TYPE_STRING, null);
+        $token = $this->getParam('token', Frapi_Action::TYPE_STRING, null);
         
-        $config = new Custom_Model_Config($sessionId);
+        $config = new Custom_Model_Config($token);
         $movietitle = $config->getConfig('titleview');
         
         $sql = '
