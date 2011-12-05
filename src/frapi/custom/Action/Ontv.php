@@ -13,6 +13,19 @@ require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Database.php';
  */
 class Action_Ontv extends Frapi_Action implements Frapi_Action_Interface
 {
+    /**
+     * Wie viel Elemente standardmaessig angezeigt werden
+     * 
+     * @var Integer
+     */
+    const LIMIT = 10;
+    
+    /**
+     * Ab wann standardmaessig ausgelesen wird
+     * 
+     * @var Integer
+     */
+    const OFFSET = 0;
 
     /**
      * Required parameters
@@ -62,6 +75,8 @@ class Action_Ontv extends Frapi_Action implements Frapi_Action_Interface
      */
     public function executeGet()
     {
+        $limit = $this->getParam('limit', FRAPI_ACTION::TYPE_INTEGER, self::LIMIT);
+        $offset = $this->getParam('offset', FRAPI_ACTION::TYPE_INTEGER, self::OFFSET);
         $token = $this->getParam('token', Frapi_Action::TYPE_STRING, null);
         
         $db = new Custom_Model_Database();
@@ -81,9 +96,9 @@ class Action_Ontv extends Frapi_Action implements Frapi_Action_Interface
             ON (t.ID = m.%s)
         WHERE
 			tv.date >= NOW()
-		LIMIT 10
+		LIMIT %d, %d
         ';
-        $query = sprintf($query, '%Y-%m-%d', $titleview);
+        $query = sprintf($query, '%Y-%m-%d', $titleview, $offset, $limit);
         $movies = $db->fetchAll($query);
         foreach($movies as $movie) {
             if (!isset($this->data[$movie['day']])) {
