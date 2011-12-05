@@ -26,6 +26,13 @@ class Action_Movie_comments extends Frapi_Action implements Frapi_Action_Interfa
      * @var Integer
      */
     const OFFSET = 0;
+    
+    /**
+     * Time in minutes comments can be edited
+     * 
+     * @var INTEGER
+     */
+    const EDIT_TIMEOUT = 30;
 
     /**
      * Required parameters
@@ -85,15 +92,21 @@ class Action_Movie_comments extends Frapi_Action implements Frapi_Action_Interfa
             return $valid;
         }
         
+        $token = $this->getParam('token', Frapi_Action::TYPE_STRING, null);
         $limit = $this->getParam('limit', FRAPI_ACTION::TYPE_INTEGER, self::LIMIT);
         $offset = $this->getParam('offset', FRAPI_ACTION::TYPE_INTEGER, self::OFFSET);
         $movieId = $this->getParam('movie_id', Frapi_Action::TYPE_INTEGER, 0);
+        
+        $config = new Custom_Model_Config($token);
+        $userId = $config->getConfig('userID');
+        
         $db = new Custom_Model_Database();
         $query = '
         SELECT
         	c.*,
         	u.login AS username,
-        	MD5(ud.email) AS gravatar
+        	MD5(ud.email) AS gravatar,
+        	(c.userID = %d && c.timestamp >= NOW() - INTERVAL %d MINUTE) as editable
         FROM
         	comment2 AS c
         INNER JOIN
@@ -107,7 +120,7 @@ class Action_Movie_comments extends Frapi_Action implements Frapi_Action_Interfa
         LIMIT
         	%d, %d
         ';
-        $query = sprintf($query, $movieId, $offset, $limit);
+        $query = sprintf($query, $userId, self::EDIT_TIMEOUT, $movieId, $offset, $limit);
         $this->data = $db->fetchAll($query);
         return $this->toArray();
     }
