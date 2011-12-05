@@ -91,12 +91,20 @@ class Action_User_login extends Frapi_Action implements Frapi_Action_Interface
         $password = $db->quote($password);
         
         $sql = '
-        SELECT		u.*,
-        			SHA1(u.password) 	AS password
-        FROM		user				AS u
-        WHERE		u.login = %s
-        AND			u.enabled = 1
-        AND			SHA1(u.password) = %s
+        SELECT
+        	u.*,
+        	SHA1(u.password) 	AS password,
+        	ud.*,
+        	MD5(ud.email)		AS gravatar
+        FROM
+        	user AS u
+        INNER JOIN
+        	user_data AS ud
+        	ON (ud.userID = u.ID)
+        WHERE
+        	u.login = %s
+        	AND	u.enabled = 1
+        	AND	SHA1(u.password) = %s
         ';
         $sql = sprintf($sql, $login, $password);
         
