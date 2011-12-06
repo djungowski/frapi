@@ -1,6 +1,7 @@
 <?php
 require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Config.php';
 require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Database.php';
+require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Thumb.php';
 
 /**
  * Action Comment_latest 
@@ -89,7 +90,9 @@ class Action_Comment_latest extends Frapi_Action implements Frapi_Action_Interfa
         				t.year			AS movieyear,
         				m.regie			AS director,
         				m.actor,
-        				m.image
+        				m.image,
+        				m.ratings,
+        				m.ratingsavg
         	FROM		comment2 		AS c
         	INNER JOIN	user			AS u
         	ON 			(u.ID = c.userID)
@@ -104,6 +107,11 @@ class Action_Comment_latest extends Frapi_Action implements Frapi_Action_Interfa
         
         $db = new Custom_Model_Database();
         $this->data = $db->fetchAll($sql);
+        // Calculate thumb for each movie
+        $thumb = new Custom_Model_Thumb();
+        foreach ($this->data as $key => $comment) {
+            $this->data[$key]['thumb'] = $thumb->getTrend($comment['ratings'], $comment['ratingsavg']);
+        }
         return $this->toArray();
     }
 
