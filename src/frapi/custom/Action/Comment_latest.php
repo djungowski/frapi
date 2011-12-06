@@ -86,7 +86,10 @@ class Action_Comment_latest extends Frapi_Action implements Frapi_Action_Interfa
         	SELECT		c.*,
         				u.login 		AS user,
         				t.title			AS movietitle,
-        				t.year			AS movieyear
+        				t.year			AS movieyear,
+        				m.regie			AS director,
+        				m.actor,
+        				m.image
         	FROM		comment2 		AS c
         	INNER JOIN	user			AS u
         	ON 			(u.ID = c.userID)
