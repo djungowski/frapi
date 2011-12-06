@@ -2,6 +2,14 @@
 <frapi-config>
   <websitedefaults>
     <websitedefault>
+      <key>host</key>
+      <value>http://www.score11.de</value>
+    </websitedefault>
+    <websitedefault>
+      <key>movieimgpath</key>
+      <value>p</value>
+    </websitedefault>
+    <websitedefault>
       <key>titleview</key>
       <value>de</value>
     </websitedefault>
