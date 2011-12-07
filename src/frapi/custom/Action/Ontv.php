@@ -1,6 +1,7 @@
 <?php
 require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Config.php';
 require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Database.php';
+require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Thumb.php';
 
 /**
  * Action Ontv 
@@ -88,7 +89,9 @@ class Action_Ontv extends Frapi_Action implements Frapi_Action_Interface
         	tv.*,
         	DATE_FORMAT(tv.date, "%s") AS day,
         	t.title AS movietitle,
-        	t.year AS movieyear
+        	t.year AS movieyear,
+        	m.ratings,
+        	m.ratingsavg
     	FROM s11_ontv_de AS tv
 		INNER JOIN	movie AS m
             ON (m.ID = tv.movieID)
@@ -100,7 +103,10 @@ class Action_Ontv extends Frapi_Action implements Frapi_Action_Interface
         ';
         $query = sprintf($query, '%Y-%m-%d', $titleview, $offset, $limit);
         $movies = $db->fetchAll($query);
+        // Calculate thumb for each movie
+        $thumb = new Custom_Model_Thumb();
         foreach($movies as $movie) {
+            $movie['thumb'] = $thumb->getTrend($movie['ratings'], $movie['ratingsavg']);
             if (!isset($this->data[$movie['day']])) {
                 $this->data[$movie['day']] = array();
             }
