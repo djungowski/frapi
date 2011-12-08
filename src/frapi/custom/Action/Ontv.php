@@ -2,6 +2,7 @@
 require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Config.php';
 require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Database.php';
 require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Thumb.php';
+require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'MovieImage.php';
 
 /**
  * Action Ontv 
@@ -90,8 +91,11 @@ class Action_Ontv extends Frapi_Action implements Frapi_Action_Interface
         	DATE_FORMAT(tv.date, "%s") AS day,
         	t.title AS movietitle,
         	t.year AS movieyear,
+        	m.image AS hasimage,
         	m.ratings,
-        	m.ratingsavg
+        	m.ratingsavg,
+        	m.regie AS director,
+        	m.actor
     	FROM s11_ontv_de AS tv
 		INNER JOIN	movie AS m
             ON (m.ID = tv.movieID)
@@ -110,6 +114,9 @@ class Action_Ontv extends Frapi_Action implements Frapi_Action_Interface
             if (!isset($this->data[$movie['day']])) {
                 $this->data[$movie['day']] = array();
             }
+            $image = new Custom_Model_MovieImage($movie['movieID'], $movie['hasimage']);
+            $movie['image'] = $image->getLink();
+            
             $this->data[$movie['day']][] = $movie;
         }
         return $this->toArray();

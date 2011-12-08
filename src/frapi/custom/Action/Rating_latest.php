@@ -1,6 +1,8 @@
 <?php
 require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Config.php';
 require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Database.php';
+require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Thumb.php';
+require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'MovieImage.php';
 
 /**
  * Action Rating_latest 
@@ -69,7 +71,12 @@ class Action_Rating_latest extends Frapi_Action implements Frapi_Action_Interfac
         $sql = '
         SELECT		r.*,
         			t.title 	AS movietitle,
-        			t.year		AS movieyear
+        			t.year		AS movieyear,
+        			m.ratings,
+        			m.ratingsavg,
+        			m.image		AS hasimage,
+        			m.regie		AS director,
+        			m.actor
         FROM		score_m		AS r
         INNER JOIN	movie		AS m
         ON			(m.ID = r.movieID)
@@ -81,6 +88,14 @@ class Action_Rating_latest extends Frapi_Action implements Frapi_Action_Interfac
         $sql = sprintf($sql, $movietitle);
         $db = new Custom_Model_Database();
         $this->data = $db->fetchAll($sql);
+        $thumb = new Custom_Model_Thumb();
+        foreach($this->data as $key => $movie) {
+            // Daumen berechnen
+            $this->data[$key]['thumb'] = $thumb->getTrend($movie['ratings'], $movie['ratingsavg']);
+            // Filmbild
+            $image = new Custom_Model_MovieImage($movie['movieID'], $movie['hasimage']);
+            $this->data[$key]['image'] = $image->getLink();
+        }
         return $this->toArray();
     }
 
