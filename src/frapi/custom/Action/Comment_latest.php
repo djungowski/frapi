@@ -20,7 +20,7 @@ class Action_Comment_latest extends Frapi_Action implements Frapi_Action_Interfa
 	 *
      * @var Integer
      */
-    const LIMIT = 3;
+    const LIMIT = 5;
     
     /**
      * Default startpoint for latest comments
