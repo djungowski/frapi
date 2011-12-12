@@ -114,7 +114,7 @@ class Action_Comment_latest extends Frapi_Action implements Frapi_Action_Interfa
         $thumb = new Custom_Model_Thumb();
         foreach ($this->data as $key => $comment) {
             $this->data[$key]['thumb'] = $thumb->getTrend($comment['ratings'], $comment['ratingsavg']);
-            $image = new Custom_Model_MovieImage($comment['refID'], $comment['hasimage']);
+            $image = new Score11\MovieImage($comment['refID'], $comment['hasimage']);
             $this->data[$key]['image'] = $image->getLink();
         }
         return $this->toArray();

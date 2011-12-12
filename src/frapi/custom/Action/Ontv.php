@@ -116,7 +116,7 @@ class Action_Ontv extends Frapi_Action implements Frapi_Action_Interface
             if (!isset($this->data[$movie['day']])) {
                 $this->data[$movie['day']] = array();
             }
-            $image = new Custom_Model_MovieImage($movie['movieID'], $movie['hasimage']);
+            $image = new Score11\MovieImage($movie['movieID'], $movie['hasimage']);
             $movie['image'] = $image->getLink();
             
             $this->data[$movie['day']][] = $movie;

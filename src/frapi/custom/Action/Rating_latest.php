@@ -95,7 +95,7 @@ class Action_Rating_latest extends Frapi_Action implements Frapi_Action_Interfac
             // Daumen berechnen
             $this->data[$key]['thumb'] = $thumb->getTrend($movie['ratings'], $movie['ratingsavg']);
             // Filmbild
-            $image = new Custom_Model_MovieImage($movie['movieID'], $movie['hasimage']);
+            $image = new Score11\MovieImage($movie['movieID'], $movie['hasimage']);
             $this->data[$key]['image'] = $image->getLink();
         }
         return $this->toArray();
