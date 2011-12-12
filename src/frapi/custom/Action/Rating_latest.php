@@ -1,5 +1,5 @@
 <?php
-use Score11\Frapi;
+use Score11\Frapi as Score11;
 
 require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Config.php';
 require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Database.php';
@@ -67,7 +67,7 @@ class Action_Rating_latest extends Frapi_Action implements Frapi_Action_Interfac
     public function executeGet()
     {
         $token = $this->getParam('token', Frapi_Action::TYPE_STRING, null);
-        $config = new Frapi\Config($token);
+        $config = new Score11\Config($token);
         $movietitle = $config->getConfig('titleview');
         
         $sql = '
@@ -88,7 +88,7 @@ class Action_Rating_latest extends Frapi_Action implements Frapi_Action_Interfac
         LIMIT		10
         ';
         $sql = sprintf($sql, $movietitle);
-        $db = new Custom_Model_Database();
+        $db = new Score11\Database();
         $this->data = $db->fetchAll($sql);
         $thumb = new Custom_Model_Thumb();
         foreach($this->data as $key => $movie) {

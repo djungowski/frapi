@@ -1,5 +1,5 @@
 <?php
-use Score11\Frapi;
+use Score11\Frapi as Score11;
 
 require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Config.php';
 require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Database.php';
@@ -71,7 +71,7 @@ class Action_Movie extends Frapi_Action implements Frapi_Action_Interface
         
         $movieId = $this->getParam('movie_id', Frapi_Action::TYPE_INTEGER, 0);
         $token = $this->getParam('token', Frapi_Action::TYPE_STRING, null);
-        $config = new Frapi\Config($token);
+        $config = new Score11\Config($token);
         $titleview = $config->getConfig('titleview');
         
         $this->data['titleview'] = $titleview;
@@ -86,7 +86,7 @@ class Action_Movie extends Frapi_Action implements Frapi_Action_Interface
     
     private function getMovieTitles($movieId, $originalTitleId = 0)
     {
-        $db = new Custom_Model_Database();
+        $db = new Score11\Database();
         $query = '
         SELECT	*,
         		(ID = %d) AS ori
@@ -99,7 +99,7 @@ class Action_Movie extends Frapi_Action implements Frapi_Action_Interface
     
     private function getMovieCast($movieId)
     {
-        $db = new Custom_Model_Database();
+        $db = new Score11\Database();
         $query = '
         SELECT	*
         FROM	s11_casting
@@ -122,7 +122,7 @@ class Action_Movie extends Frapi_Action implements Frapi_Action_Interface
     
     private function getMovieDetails($movieId)
     {
-        $db = new Custom_Model_Database();
+        $db = new Score11\Database();
         $query = '
         SELECT	*
         FROM	movie
@@ -134,7 +134,7 @@ class Action_Movie extends Frapi_Action implements Frapi_Action_Interface
     
     private function addGenres()
     {
-        $db = new Custom_Model_Database();
+        $db = new Score11\Database();
         $genreIds = array(
             $this->data['genre1'] => 'genre1',
             $this->data['genre2'] => 'genre2',

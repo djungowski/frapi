@@ -1,11 +1,12 @@
 <?php
+namespace Score11\Frapi;
 
 /**
  * Database connector as we need it
  * 
  * @author djungowski
  */
-class Custom_Model_Database
+class Database
 {
     /**
      * Database connection
@@ -16,7 +17,7 @@ class Custom_Model_Database
     
     public function __construct()
     {
-        $this->_db = Frapi_Database::getInstance();
+        $this->_db = \Frapi_Database::getInstance();
     }
     
     /**
@@ -41,9 +42,9 @@ class Custom_Model_Database
         $statement = $this->_db->query($query);
         if ($statement === false) {
             $errorInfo = $this->_db->errorInfo();
-            throw new Frapi_Error('SQL_ERROR ' . $errorInfo[0], $errorInfo[2], 500);
+            throw new \Frapi_Error('SQL_ERROR ' . $errorInfo[0], $errorInfo[2], 500);
         }
-        $data = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $data = $statement->fetchAll(\PDO::FETCH_ASSOC);
         $data = $this->encodeUtf8Recursive($data);
         return $data;
     }
@@ -57,7 +58,7 @@ class Custom_Model_Database
     public function fetch($query)
     {
         $statement = $this->_db->query($query);
-        $data = $statement->fetch(PDO::FETCH_ASSOC);
+        $data = $statement->fetch(\PDO::FETCH_ASSOC);
         // if there is no result, use an empty array
         if(!$data) {
             $data = array();

@@ -1,5 +1,5 @@
 <?php
-use Score11\Frapi;
+use Score11\Frapi as Score11;
 
 require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Config.php';
 require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Database.php';
@@ -83,8 +83,8 @@ class Action_Ontv extends Frapi_Action implements Frapi_Action_Interface
         $offset = $this->getParam('offset', FRAPI_ACTION::TYPE_INTEGER, self::OFFSET);
         $token = $this->getParam('token', Frapi_Action::TYPE_STRING, null);
         
-        $db = new Custom_Model_Database();
-        $config = new Frapi\Config($token);
+        $db = new Score11\Database();
+        $config = new Score11\Config($token);
         $titleview = $config->getConfig('titleview');
         
         $query = '

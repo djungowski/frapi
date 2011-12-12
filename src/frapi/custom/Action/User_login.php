@@ -1,5 +1,5 @@
 <?php
-use Score11\Frapi;
+use Score11\Frapi as Score11;
 
 require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Config.php';
 require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Database.php';
@@ -85,7 +85,7 @@ class Action_User_login extends Frapi_Action implements Frapi_Action_Interface
         if ($valid instanceof Frapi_Error) {
             return $valid;
         }
-        $db = new Custom_Model_Database();
+        $db = new Score11\Database();
         
         $login = $this->getParam('login', Frapi_Action::TYPE_STRING);
         $login = $db->quote($login);
@@ -132,7 +132,7 @@ class Action_User_login extends Frapi_Action implements Frapi_Action_Interface
         $this->data['token'] = $sessionId;
         $memcache = new Memcache();
         $memcache->addServer('localhost');
-        $memcache->set($sessionId, json_encode($this->data), null, Frapi\Config::SESSION_DURATION);
+        $memcache->set($sessionId, json_encode($this->data), null, Score11\Config::SESSION_DURATION);
     }
     
     /**

@@ -1,5 +1,5 @@
 <?php
-use Score11\Frapi;
+use Score11\Frapi as Score11;
 
 require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Config.php';
 require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Database.php';
@@ -83,7 +83,7 @@ class Action_Comment_latest extends Frapi_Action implements Frapi_Action_Interfa
         $offset = $this->getParam('offset', FRAPI_ACTION::TYPE_INTEGER, self::OFFSET);
         $token = $this->getParam('token', Frapi_Action::TYPE_STRING, null);
         
-        $config = new Frapi\Config($token);
+        $config = new Score11\Config($token);
         $movietitle = $config->getConfig('titleview');
         
         $sql = '
@@ -108,7 +108,7 @@ class Action_Comment_latest extends Frapi_Action implements Frapi_Action_Interfa
         ';
         $sql = sprintf($sql, $movietitle, $offset, $limit);
         
-        $db = new Custom_Model_Database();
+        $db = new Score11\Database();
         $this->data = $db->fetchAll($sql);
         // Calculate thumb for each movie
         $thumb = new Custom_Model_Thumb();
