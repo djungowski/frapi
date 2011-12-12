@@ -119,6 +119,8 @@ class Action_Movie_comments extends Frapi_Action implements Frapi_Action_Interfa
         	ON (ud.userID = c.userID)
         WHERE
         	c.refID = %d
+        ORDER BY
+        	c.timestamp DESC
         LIMIT
         	%d, %d
         ';
