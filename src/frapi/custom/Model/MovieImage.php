@@ -1,4 +1,6 @@
 <?php
+use Score11\Frapi;
+
 require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Config.php';
 
 class Custom_Model_MovieImage
@@ -13,7 +15,7 @@ class Custom_Model_MovieImage
     {
         $this->_movieId = $movieId;
         $this->_hasImage = $hasImage;
-        $config = new Custom_Model_Config();
+        $config = new Frapi\Config();
         $host = $config->getConfig('host');
         $path = $config->getConfig('movieimgpath');
         $this->_movieImagePath = $host . '/' . $path;

@@ -1,4 +1,6 @@
 <?php
+use Score11\Frapi;
+
 require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Config.php';
 require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Database.php';
 
@@ -130,7 +132,7 @@ class Action_User_login extends Frapi_Action implements Frapi_Action_Interface
         $this->data['token'] = $sessionId;
         $memcache = new Memcache();
         $memcache->addServer('localhost');
-        $memcache->set($sessionId, json_encode($this->data), null, Custom_Model_Config::SESSION_DURATION);
+        $memcache->set($sessionId, json_encode($this->data), null, Frapi\Config::SESSION_DURATION);
     }
     
     /**

@@ -1,4 +1,6 @@
 <?php
+use Score11\Frapi;
+
 require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Config.php';
 require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Database.php';
 
@@ -97,7 +99,7 @@ class Action_Movie_comments extends Frapi_Action implements Frapi_Action_Interfa
         $offset = $this->getParam('offset', FRAPI_ACTION::TYPE_INTEGER, self::OFFSET);
         $movieId = $this->getParam('movie_id', Frapi_Action::TYPE_INTEGER, 0);
         
-        $config = new Custom_Model_Config($token);
+        $config = new Frapi\Config($token);
         $userId = $config->getConfig('userID');
         
         $db = new Custom_Model_Database();

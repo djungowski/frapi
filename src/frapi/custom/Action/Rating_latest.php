@@ -1,4 +1,6 @@
 <?php
+use Score11\Frapi;
+
 require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Config.php';
 require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Database.php';
 require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Thumb.php';
@@ -65,7 +67,7 @@ class Action_Rating_latest extends Frapi_Action implements Frapi_Action_Interfac
     public function executeGet()
     {
         $token = $this->getParam('token', Frapi_Action::TYPE_STRING, null);
-        $config = new Custom_Model_Config($token);
+        $config = new Frapi\Config($token);
         $movietitle = $config->getConfig('titleview');
         
         $sql = '

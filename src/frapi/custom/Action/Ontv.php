@@ -1,4 +1,6 @@
 <?php
+use Score11\Frapi;
+
 require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Config.php';
 require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Database.php';
 require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Thumb.php';
@@ -82,7 +84,7 @@ class Action_Ontv extends Frapi_Action implements Frapi_Action_Interface
         $token = $this->getParam('token', Frapi_Action::TYPE_STRING, null);
         
         $db = new Custom_Model_Database();
-        $config = new Custom_Model_Config($token);
+        $config = new Frapi\Config($token);
         $titleview = $config->getConfig('titleview');
         
         $query = '

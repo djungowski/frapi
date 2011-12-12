@@ -1,6 +1,7 @@
 <?php
+namespace Score11\Frapi;
 
-class Custom_Model_Config
+class Config
 {
     const SESSION_DURATION = 1800;
     
@@ -25,7 +26,7 @@ class Custom_Model_Config
     public function getConfig($key)
     {
         if (!isset($this->_config[$key])) {
-            $conf = Frapi_Internal::getConfiguration('websitedefaults');
+            $conf = \Frapi_Internal::getConfiguration('websitedefaults');
             $keyConfig = $conf->getByField('websitedefault', 'key', $key);
             $this->_config[$key] = $keyConfig['value']; 
         }

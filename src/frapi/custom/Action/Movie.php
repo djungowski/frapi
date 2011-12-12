@@ -1,4 +1,6 @@
 <?php
+use Score11\Frapi;
+
 require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Config.php';
 require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Database.php';
 
@@ -69,7 +71,7 @@ class Action_Movie extends Frapi_Action implements Frapi_Action_Interface
         
         $movieId = $this->getParam('movie_id', Frapi_Action::TYPE_INTEGER, 0);
         $token = $this->getParam('token', Frapi_Action::TYPE_STRING, null);
-        $config = new Custom_Model_Config($token);
+        $config = new Frapi\Config($token);
         $titleview = $config->getConfig('titleview');
         
         $this->data['titleview'] = $titleview;
