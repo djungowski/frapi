@@ -111,7 +111,7 @@ class Action_Comment_latest extends Frapi_Action implements Frapi_Action_Interfa
         $db = new Score11\Database();
         $this->data = $db->fetchAll($sql);
         // Calculate thumb for each movie
-        $thumb = new Custom_Model_Thumb();
+        $thumb = new Score11\Thumb();
         foreach ($this->data as $key => $comment) {
             $this->data[$key]['thumb'] = $thumb->getTrend($comment['ratings'], $comment['ratingsavg']);
             $image = new Score11\MovieImage($comment['refID'], $comment['hasimage']);

@@ -90,7 +90,7 @@ class Action_Rating_latest extends Frapi_Action implements Frapi_Action_Interfac
         $sql = sprintf($sql, $movietitle);
         $db = new Score11\Database();
         $this->data = $db->fetchAll($sql);
-        $thumb = new Custom_Model_Thumb();
+        $thumb = new Score11\Thumb();
         foreach($this->data as $key => $movie) {
             // Daumen berechnen
             $this->data[$key]['thumb'] = $thumb->getTrend($movie['ratings'], $movie['ratingsavg']);

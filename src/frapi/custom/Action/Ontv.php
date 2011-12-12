@@ -110,7 +110,7 @@ class Action_Ontv extends Frapi_Action implements Frapi_Action_Interface
         $query = sprintf($query, '%Y-%m-%d', $titleview, $offset, $limit);
         $movies = $db->fetchAll($query);
         // Calculate thumb for each movie
-        $thumb = new Custom_Model_Thumb();
+        $thumb = new Score11\Thumb();
         foreach($movies as $movie) {
             $movie['thumb'] = $thumb->getTrend($movie['ratings'], $movie['ratingsavg']);
             if (!isset($this->data[$movie['day']])) {

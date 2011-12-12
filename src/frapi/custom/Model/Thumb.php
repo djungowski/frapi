@@ -1,6 +1,7 @@
 <?php
+namespace Score11\Frapi;
 
-class Custom_Model_Thumb
+class Thumb
 {
     const THUMB_UP = 6.5;
     const THUMB_AVG = 3.5;
