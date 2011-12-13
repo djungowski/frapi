@@ -10,9 +10,9 @@ class ApiCall
      */
     private $_url;
     
-    private $_username = 'score11';
+    private $_username = Config::API_USER;
     
-    private $_password = 'bfeaf45d7fe418635d6b361f1aec34630096431d';
+    private $_password = Config::API_KEY;
     
     public function __construct($url)
     {
