@@ -16,7 +16,7 @@ class ApiCall
     
     public function __construct($url)
     {
-        $this->_url = Config::API_BASE . '/' . $url;
+        $this->_url = Config::API_BASE . '/' . $url . '.' . Config::API_FORMAT;
     }
     
     public function request($method = 'GET')

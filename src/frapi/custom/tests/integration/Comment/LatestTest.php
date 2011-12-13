@@ -1,11 +1,11 @@
 <?php
-namespace Score11\Frapi\Integration\Comment;
+namespace Score11\Frapi\Test\Integration\Comment;
 
 use Score11\Frapi\Test\Library;
 
 class LatestTest extends \PHPUnit_Framework_TestCase
 {
-    public function testCall()
+    public function testGet()
     {
         $call = new Library\ApiCall('comment/latest');
         $content = $call->request();
