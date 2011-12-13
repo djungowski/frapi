@@ -100,7 +100,7 @@ class Action_User_login extends Frapi_Action implements Frapi_Action_Interface
         	MD5(ud.email)		AS gravatar
         FROM
         	user AS u
-        INNER JOIN
+        LEFT JOIN
         	user_data AS ud
         	ON (ud.userID = u.ID)
         WHERE

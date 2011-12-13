@@ -25,4 +25,51 @@ class LoginTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('ERROR_MISSING_REQUEST_ARG', $content['errors'][0]['name']);
         $this->assertSame('Required Parameters: login, password', $content['errors'][0]['at']);
     }
+    
+    public function testPostWithWrongCredentials()
+    {
+        $api = new ApiCall('user/login');
+        $credentials = array(
+            'login' => 'lebowski',
+            'password' => 'somerandomstring' 
+        );
+        $api->setPostParameters($credentials);
+        $content = $api->request('POST');
+        $this->assertInternalType('array', $content);
+        // Login darf nicht erfolgreich gewesen sein
+        $this->assertFalse($content['success']);
+        $this->assertSame('lebowski', $content['login']);
+    }
+    
+    public function testPostWithCorrectCredentials()
+    {
+        $api = new ApiCall('user/login');
+        $credentials = array(
+            'login' => 'lebowski',
+            'password' => '0ee9874e0d89f70758b86fe6e282db8f465d1c0d' 
+        );
+        $api->setPostParameters($credentials);
+        $content = $api->request('POST');
+        $this->assertInternalType('array', $content);
+        // Login darf nicht erfolgreich gewesen sein
+        $this->assertTrue($content['success']);
+        $this->assertSame('lebowski', $content['login']);
+        // Es gibt einen Array Key "token"
+        $this->assertArrayHasKey('token', $content);
+    }
+    
+    public function testPostWithDeactivatedUser()
+    {
+        $api = new ApiCall('user/login');
+        $credentials = array(
+            'login' => 'queenofscots',
+            'password' => '54670e8b683451623ddb133b8977e4deca9e75d7'
+        );
+        $api->setPostParameters($credentials);
+        $content = $api->request('POST');
+        $this->assertInternalType('array', $content);
+        // Login darf nicht erfolgreich gewesen sein
+        $this->assertFalse($content['success']);
+        $this->assertSame('queenofscots', $content['login']);
+    }
 }
