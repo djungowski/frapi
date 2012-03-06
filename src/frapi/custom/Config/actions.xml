@@ -117,5 +117,27 @@
     </parameter>
    </parameters>
   </action>
+  <action>
+   <name>Movie_startlist</name>
+   <enabled>1</enabled>
+   <public>0</public>
+   <description>Shows a list with all moviestarts from now on</description>
+   <route>/list/moviestart</route>
+   <hash>183969aaf55f861c513b64936079c36cb1de5616</hash>
+   <parameters>
+    <parameter>
+     <name>limit</name>
+     <required>0</required>
+    </parameter>
+    <parameter>
+     <name>offet</name>
+     <required>0</required>
+    </parameter>
+    <parameter>
+     <name>token</name>
+     <required>0</required>
+    </parameter>
+   </parameters>
+  </action>
  </actions>
 </frapi-config>
