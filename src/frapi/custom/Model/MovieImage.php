@@ -27,7 +27,8 @@ class MovieImage
             $link = sprintf('%s/25/6025', $this->_movieImagePath);
         } else {
             $lastTwo = substr($this->_movieId, -2, 2);
-            $link = sprintf('%s/%d/%s', $this->_movieImagePath, $lastTwo, $this->_movieId);
+            // %s statt %d fuer den zweiten paraemter verwendet, da sonst aus 05 5 wird und dann stimmt der Bildlink nicht mehr
+            $link = sprintf('%s/%s/%s', $this->_movieImagePath, $lastTwo, $this->_movieId);
         }
         return $link;
     }
