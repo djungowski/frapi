@@ -72,6 +72,7 @@ class Action_Rating_latest extends Frapi_Action implements Frapi_Action_Interfac
         
         $sql = '
         SELECT		r.*,
+			DATE_FORMAT(r.timestamp, "%s") AS day,
         			t.title 	AS movietitle,
         			t.year		AS movieyear,
         			m.ratings,
@@ -87,7 +88,7 @@ class Action_Rating_latest extends Frapi_Action implements Frapi_Action_Interfac
         ORDER BY	r.timestamp DESC
         LIMIT		10
         ';
-        $sql = sprintf($sql, $movietitle);
+        $sql = sprintf($sql, '%Y-%m-%d', $movietitle);
         $db = new Score11\Database();
         $this->data = $db->fetchAll($sql);
         $thumb = new Score11\Thumb();
