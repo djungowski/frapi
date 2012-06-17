@@ -114,7 +114,7 @@ class Action_Movie_startlist extends Frapi_Action implements Frapi_Action_Interf
         $thumb = new Score11\Thumb();
         foreach($movies as $movie) {
             $movie['thumb'] = $thumb->getTrend($movie['ratings'], $movie['ratingsavg']);
-            $image = new Score11\MovieImage($movie['ID'], $movie['hasimage']);
+            $image = new Score11\MovieImage($movie['movieID'], $movie['hasimage']);
             $movie['image'] = $image->getLink();
             
             $this->data[] = $movie;
