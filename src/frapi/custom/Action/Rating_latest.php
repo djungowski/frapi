@@ -17,6 +17,19 @@ require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'MovieImage.php';
  */
 class Action_Rating_latest extends Frapi_Action implements Frapi_Action_Interface
 {
+    /**
+     * Wie viel Elemente standardmaessig angezeigt werden
+     *
+     * @var Integer
+     */
+    const LIMIT = 10;
+
+    /**
+     * Ab wann standardmaessig ausgelesen wird
+     *
+     * @var Integer
+     */
+    const OFFSET = 0;
 
     /**
      * Required parameters
@@ -66,6 +79,8 @@ class Action_Rating_latest extends Frapi_Action implements Frapi_Action_Interfac
      */
     public function executeGet()
     {
+	$limit = $this->getParam('limit', FRAPI_ACTION::TYPE_INTEGER, self::LIMIT);
+        $offset = $this->getParam('offset', FRAPI_ACTION::TYPE_INTEGER, self::OFFSET);
         $token = $this->getParam('token', Frapi_Action::TYPE_STRING, null);
         $config = new Score11\Config($token);
         $movietitle = $config->getConfig('titleview');
@@ -87,9 +102,9 @@ class Action_Rating_latest extends Frapi_Action implements Frapi_Action_Interfac
         INNER JOIN	title_m		AS t
         ON			(t.ID = m.%s)
         ORDER BY	r.timestamp DESC
-        LIMIT		10
+        LIMIT		%d, %d
         ';
-        $sql = sprintf($sql, '%Y-%m-%d', $movietitle);
+        $sql = sprintf($sql, '%Y-%m-%d', $movietitle, $offset, $limit);
         $db = new Score11\Database();
         $this->data = $db->fetchAll($sql);
         $thumb = new Score11\Thumb();
