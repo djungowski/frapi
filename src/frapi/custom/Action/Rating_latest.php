@@ -73,6 +73,7 @@ class Action_Rating_latest extends Frapi_Action implements Frapi_Action_Interfac
         $sql = '
         SELECT		r.*,
 			DATE_FORMAT(r.timestamp, "%s") AS day,
+			r.timestamp AS date,
         			t.title 	AS movietitle,
         			t.year		AS movieyear,
         			m.ratings,
