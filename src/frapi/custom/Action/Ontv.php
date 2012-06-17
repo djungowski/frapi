@@ -113,13 +113,10 @@ class Action_Ontv extends Frapi_Action implements Frapi_Action_Interface
         $thumb = new Score11\Thumb();
         foreach($movies as $movie) {
             $movie['thumb'] = $thumb->getTrend($movie['ratings'], $movie['ratingsavg']);
-            if (!isset($this->data[$movie['day']])) {
-                $this->data[$movie['day']] = array();
-            }
             $image = new Score11\MovieImage($movie['movieID'], $movie['hasimage']);
             $movie['image'] = $image->getLink();
             
-            $this->data[$movie['day']][] = $movie;
+            $this->data[] = $movie;
         }
         return $this->toArray();
     }
