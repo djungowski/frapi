@@ -90,6 +90,7 @@ class Action_Ontv extends Frapi_Action implements Frapi_Action_Interface
         $query = '
         SELECT
         	tv.*,
+		tv.ID as movieID,
         	DATE_FORMAT(tv.date, "%s") AS day,
         	t.title AS movietitle,
         	t.year AS movieyear,

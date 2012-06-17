@@ -89,7 +89,7 @@ class Action_Movie_startlist extends Frapi_Action implements Frapi_Action_Interf
         
         $query = '
         SELECT
-        	ms.movieID as ID,
+        	ms.movieID,
         	ms.date,
         	DATE_FORMAT(ms.date, "%s") AS day,
         	t.title AS movietitle,
