@@ -112,7 +112,7 @@ class Action_Movie extends Frapi_Action implements Frapi_Action_Interface
         WHERE	movieID = %d
         ORDER BY
         	cast,
-        	prio
+        	prio DESC
         ';
         $query = sprintf($query, $movieId);
         $cast = $db->fetchAll($query);
