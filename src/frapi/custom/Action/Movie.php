@@ -87,6 +87,9 @@ class Action_Movie extends Frapi_Action implements Frapi_Action_Interface
         $image = new Score11\MovieImage($this->data['ID'], $this->data['hasimage']);
         $this->data['image'] = $image->getLink();
         
+        // Agenteninfos zusammenfuehren
+        $this->combineAgentInfo();
+        
         return $this->toArray();
     }
     
@@ -130,13 +133,25 @@ class Action_Movie extends Frapi_Action implements Frapi_Action_Interface
     {
         $db = new Score11\Database();
         $query = '
-        SELECT	*,
-        		image	AS	hasimage
-        FROM	movie
-        WHERE	ID = %d
+        SELECT		m.*,
+        			m.image	AS	hasimage,
+        			u.login	AS 	agent
+        FROM		movie	AS	m
+        LEFT JOIN	user	AS 	u
+        ON			(u.ID = m.regUID)
+        WHERE		m.ID = %d
         ';
         $query = sprintf($query, $movieId);
         return $db->fetch($query);
+    }
+    
+    private function combineAgentInfo()
+    {
+    	$this->data['agent'] = array(
+    		'ID'	=> $this->data['regUID'],
+    		'name'	=> $this->data['agent']
+    	);
+    	unset($this->data['regUID']);
     }
     
     private function addGenres()
