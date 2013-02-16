@@ -3,6 +3,7 @@ use Score11\Frapi as Score11;
 
 require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Config.php';
 require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Database.php';
+require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'MovieImage.php';
 
 /**
  * Action Movie 
@@ -81,6 +82,11 @@ class Action_Movie extends Frapi_Action implements Frapi_Action_Interface
         // Dann die Besetzung auslesen
         $this->data['cast'] = $this->getMovieCast($movieId);
         $this->addGenres();
+        
+        // Bildlink hinzufuegen
+        $image = new Score11\MovieImage($this->data['ID'], $this->data['hasimage']);
+        $this->data['image'] = $image->getLink();
+        
         return $this->toArray();
     }
     
@@ -124,7 +130,8 @@ class Action_Movie extends Frapi_Action implements Frapi_Action_Interface
     {
         $db = new Score11\Database();
         $query = '
-        SELECT	*
+        SELECT	*,
+        		image	AS	hasimage
         FROM	movie
         WHERE	ID = %d
         ';
