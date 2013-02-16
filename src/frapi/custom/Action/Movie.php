@@ -154,9 +154,10 @@ class Action_Movie extends Frapi_Action implements Frapi_Action_Interface
         WHERE	ID IN (%s)
         ';
         $query = sprintf($query, implode(',', array_keys($genreIds)));
-        $genres = $db->fetchAll($query);
-        foreach($genres as $genre) {
-            $this->data[$genreIds[$genre['ID']]] = $genre;
+        $this->data['genres'] = $db->fetchAll($query);
+        // Einzelne Genre IDs entfernen
+        foreach($genreIds as $genre) {
+            unset($this->data[$genre]);
         }
     }
 
