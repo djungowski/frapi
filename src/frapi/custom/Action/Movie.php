@@ -121,6 +121,9 @@ class Action_Movie extends Frapi_Action implements Frapi_Action_Interface
         $cast = $db->fetchAll($query);
         $groupedCast = array();
         foreach ($cast as $person) {
+        	// Schreibfehler korrigieren
+        	$person['role']  = $person['roll'];
+        	unset($person['roll']);
             if (!isset($groupedCast[$person['cast']])) {
                 $groupedCast[$person['cast']] = array();
             }
