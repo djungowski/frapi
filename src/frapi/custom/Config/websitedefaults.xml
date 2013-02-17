@@ -13,5 +13,9 @@
       <key>titleview</key>
       <value>de</value>
     </websitedefault>
+    <websitedefault>
+      <key>movie-logo</key>
+      <value>img/logo-movie.png</value>
+    </websitedefault>
   </websitedefaults>
 </frapi-config>

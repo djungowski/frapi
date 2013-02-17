@@ -4,6 +4,10 @@
     colors="true">
 
     <testsuite name="Score11 REST Service Integration Tests">
-        <directory>./integration</directory>    
+        <directory>./integration</directory>
+    </testsuite>
+    
+    <testsuite name="Score11 REST Service Unit Tests">
+        <directory>./unit</directory>
     </testsuite>
 </phpunit>
