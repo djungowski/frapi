@@ -1,8 +1,10 @@
 <?php
+use Score11\Frapi\Thumb;
 use Score11\Frapi as Score11;
 
 require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Config.php';
 require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Database.php';
+require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Thumb.php';
 
 /**
  * Action Movie_comments 
@@ -109,7 +111,8 @@ class Action_Movie_comments extends Frapi_Action implements Frapi_Action_Interfa
         	u.login AS username,
         	MD5(ud.email) AS gravatar,
         	(c.userID = %d && c.timestamp >= NOW() - INTERVAL %d MINUTE) as editable,
-        	s.value AS score
+        	s.value AS score,
+        	u.showratings AS showrating
         FROM
         	comment2 AS c
         INNER JOIN
@@ -130,6 +133,10 @@ class Action_Movie_comments extends Frapi_Action implements Frapi_Action_Interfa
         ';
         $query = sprintf($query, $userId, self::EDIT_TIMEOUT, $movieId, $offset, $limit);
         $this->data = $db->fetchAll($query);
+        $thumb = new Thumb();
+        foreach($this->data as $key => $comment) {
+        	$this->data[$key]['thumb'] = $thumb->getTrend(1, $comment['score']); 
+        }
         return $this->toArray();
     }
 
