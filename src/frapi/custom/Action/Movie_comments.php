@@ -108,7 +108,8 @@ class Action_Movie_comments extends Frapi_Action implements Frapi_Action_Interfa
         	c.*,
         	u.login AS username,
         	MD5(ud.email) AS gravatar,
-        	(c.userID = %d && c.timestamp >= NOW() - INTERVAL %d MINUTE) as editable
+        	(c.userID = %d && c.timestamp >= NOW() - INTERVAL %d MINUTE) as editable,
+        	s.value AS score
         FROM
         	comment2 AS c
         INNER JOIN
@@ -117,6 +118,9 @@ class Action_Movie_comments extends Frapi_Action implements Frapi_Action_Interfa
         INNER JOIN
         	user_data AS ud
         	ON (ud.userID = c.userID)
+        INNER JOIN
+        	score_m AS s
+        	ON (s.userID = c.userID AND s.movieID = c.refID)
         WHERE
         	c.refID = %d
         ORDER BY
