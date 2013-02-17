@@ -20,4 +20,12 @@ class MovieImageTest extends \PHPUnit_Framework_TestCase
 		$actual = $image->getLink();
 		self::assertSame($expected, $actual);
 	}
+	
+	public function testGetLinkWith1DigitFolder()
+	{
+		$image = new MovieImage(5);
+		$expected = "http://www.score11.de/p/05/5";
+		$actual = $image->getLink();
+		self::assertSame($expected, $actual);
+	}
 }
