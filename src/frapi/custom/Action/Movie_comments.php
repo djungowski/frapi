@@ -121,7 +121,7 @@ class Action_Movie_comments extends Frapi_Action implements Frapi_Action_Interfa
         INNER JOIN
         	user_data AS ud
         	ON (ud.userID = c.userID)
-        INNER JOIN
+        LEFT JOIN
         	score_m AS s
         	ON (s.userID = c.userID AND s.movieID = c.refID)
         WHERE
