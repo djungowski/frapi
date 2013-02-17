@@ -4,6 +4,7 @@ use Score11\Frapi as Score11;
 require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Config.php';
 require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Database.php';
 require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'MovieImage.php';
+require_once CUSTOM_MODEL . DIRECTORY_SEPARATOR . 'Thumb.php';
 
 /**
  * Action Movie 
