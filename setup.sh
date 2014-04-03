@@ -13,7 +13,7 @@ CURRENTDIR=`pwd`
 
 # Giving permissions
 ## This is for the generated actions (By the administration interface)
-chmod 775 $CURRENTDIR/src/frapi/custom/Action
+chmod 776 $CURRENTDIR/src/frapi/custom/Action
 
-chmod 775 $CURRENTDIR/src/frapi/custom/Config
-chmod 664 $CURRENTDIR/src/frapi/custom/Config/*.xml
+chmod 776 $CURRENTDIR/src/frapi/custom/Config
+chmod 666 $CURRENTDIR/src/frapi/custom/Config/*.xml

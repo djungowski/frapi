@@ -139,5 +139,31 @@
     </parameter>
    </parameters>
   </action>
+  <action>
+   <name>Movie_bdlist</name>
+   <enabled>1</enabled>
+   <public>0</public>
+   <description>Lists the latest BluRay &amp; DVD Releases</description>
+   <route>/list/bdrelease</route>
+   <hash>14c2c339cae27d220c94d7f73191fca1fc276598</hash>
+  </action>
+  <action>
+   <name>Search</name>
+   <enabled>1</enabled>
+   <public>0</public>
+   <description>Search for movies by query</description>
+   <route>/search/:query</route>
+   <hash>60c3c4af1dc3c644bc09c01e9b8ce4bd9eecd2fa</hash>
+   <parameters>
+    <parameter>
+     <name>query</name>
+     <required>1</required>
+    </parameter>
+    <parameter>
+     <name>token</name>
+     <required>0</required>
+    </parameter>
+   </parameters>
+  </action>
  </actions>
 </frapi-config>
