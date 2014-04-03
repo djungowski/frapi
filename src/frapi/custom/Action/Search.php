@@ -96,7 +96,7 @@ class Action_Search extends Frapi_Action implements Frapi_Action_Interface
         	title LIKE "%s"
         ';
         $queryParam = '%' . $queryParam . '%';
-        $query = sprintf($query, $queryParam);
+        $query = sprintf($query, mysql_real_escape_string($queryParam));
         $movies = $db->fetchAll($query);
         $this->data['movies'] = array();
 	    // Calculate thumb for each movie
