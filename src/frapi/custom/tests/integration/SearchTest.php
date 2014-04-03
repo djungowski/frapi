@@ -10,7 +10,7 @@ class SearchTest extends \PHPUnit_Framework_Testcase
 		$api = new ApiCall('search/expendables');
 		$content = $api->request();
 		$this->assertInternalType('array', $content);
-		$this->assertEquals(count($content), 4);
-		$this->assertSame('The Expendables 3', $content[3]['ori']);
+		$this->assertEquals(4, count($content['movies']));
+		$this->assertSame('The Expendables 3', $content['movies'][3]['title']);
 	}
 }
